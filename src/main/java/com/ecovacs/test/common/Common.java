@@ -38,6 +38,11 @@ public class Common {
         ALREADY_REGISTER //user had registered
     }
 
+    public enum Malfunction{
+        DEEBOT_SUSPEND, //deebot suspend
+        OTHERS
+    }
+
     private Common(){
 
     }

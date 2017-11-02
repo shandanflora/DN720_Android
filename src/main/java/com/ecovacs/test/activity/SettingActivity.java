@@ -24,16 +24,18 @@ public class SettingActivity {
     private MobileElement back = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/work_log")
     private MobileElement textViewWorkLog = null;
-    @FindBy(xpath = "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]")
+    /*@FindBy(xpath = "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]")
     private MobileElement textViewContinuedClean = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_block_status")
-    private MobileElement textDisturbStatus = null;
+    private MobileElement textDisturbStatus = null;*/
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/appointment_time")
     private MobileElement textViewTimeSchedule = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/consumable_timing")
     private MobileElement textViewConsumable = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/rename")
     private MobileElement textViewRename = null;
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/locate_robot")
+    private MobileElement textViewFind = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/firmware_version")
     private MobileElement textViewFirmware = null;
 
@@ -61,9 +63,9 @@ public class SettingActivity {
         textViewWorkLog.click();
     }
 
-    public void clickContinuedClean(){
+    /*public void clickContinuedClean(){
         textViewContinuedClean.click();
-    }
+    }*/
 
     public void clickTimeSchedule(){
         textViewTimeSchedule.click();
@@ -89,10 +91,10 @@ public class SettingActivity {
     }
 
     public boolean showActivity(){
-        return Common.getInstance().showActivity(textDisturbStatus);
+        return Common.getInstance().showActivity(textViewRename);
     }
 
-    public boolean checkDisturbStatus(Map<String, String> tranMap){
+    /*public boolean checkDisturbStatus(Map<String, String> tranMap){
         boolean btextDisturbStatus = textDisturbStatus.getText().equalsIgnoreCase(tranMap.get("random_deebot_open"));
         if (!btextDisturbStatus) {
             TranslateErrorReport.getInstance().insetNewLine(
@@ -100,15 +102,15 @@ public class SettingActivity {
                     tranMap.get("random_deebot_open"), "fail");
         }
         return btextDisturbStatus;
-    }
+    }*/
 
     public boolean staticUiTranslate(Map<String, String> tranMap){
         String strLanguage = tranMap.get("language");
-        boolean bTitle = title.getText().equalsIgnoreCase(tranMap.get("random_deebot_settings"));
+        boolean bTitle = title.getText().equalsIgnoreCase(tranMap.get("random_deebot_more"));
         if (!bTitle) {
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "Settting", title.getText(),
-                    tranMap.get("random_deebot_settings"), "fail");
+                    tranMap.get("random_deebot_more"), "fail");
         }
         boolean btextViewTimeSchedule = textViewTimeSchedule.getText().equalsIgnoreCase(tranMap.get("random_deebot_appointment"));
         if (!btextViewTimeSchedule) {
@@ -122,7 +124,7 @@ public class SettingActivity {
                     strLanguage, "Settting", textViewWorkLog.getText(),
                     tranMap.get("random_deebot_work_log"), "fail");
         }
-        boolean btextViewContinuedClean = textViewContinuedClean.getText().equalsIgnoreCase(tranMap.get("random_deebot_no_disturb"));
+        /*boolean btextViewContinuedClean = textViewContinuedClean.getText().equalsIgnoreCase(tranMap.get("random_deebot_no_disturb"));
         if (!btextViewContinuedClean) {
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "Settting", textViewContinuedClean.getText(),
@@ -133,7 +135,7 @@ public class SettingActivity {
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "Settting", textDisturbStatus.getText(),
                     tranMap.get("random_deebot_close"), "fail");
-        }
+        }*/
         boolean btextViewConsumable = textViewConsumable.getText().equalsIgnoreCase(tranMap.get("random_deebot_consumable"));
         if (!btextViewConsumable) {
             TranslateErrorReport.getInstance().insetNewLine(
@@ -146,15 +148,15 @@ public class SettingActivity {
                     strLanguage, "Settting", textViewRename.getText(),
                     tranMap.get("random_deebot_rename"), "fail");
         }
-        /*boolean btextViewFirmware = textViewFirmware.getText().equalsIgnoreCase(tranMap.get("The_host_Settings"));
-        if (!btextViewFirmware) {
+        boolean btextViewFind = textViewFind.getText().equalsIgnoreCase(tranMap.get("random_deebot_find"));
+        if (!btextViewFind) {
             TranslateErrorReport.getInstance().insetNewLine(
-                    strLanguage, "Settting", textViewFirmware.getText(),
-                    tranMap.get("The_host_Settings"), "fail");
-        }*/
-        return bTitle && btextViewWorkLog && btextViewContinuedClean &&
-                btextViewTimeSchedule && btextDisturbStatus && btextViewConsumable &&
-                btextViewRename /*&& btextViewFirmware*/;
+                    strLanguage, "Settting", textViewFind.getText(),
+                    tranMap.get("random_deebot_find"), "fail");
+        }
+        return bTitle && btextViewWorkLog && /*btextViewContinuedClean &&*/
+                btextViewTimeSchedule && /*btextDisturbStatus &&*/ btextViewConsumable &&
+                btextViewRename && btextViewFind;
     }
 
 

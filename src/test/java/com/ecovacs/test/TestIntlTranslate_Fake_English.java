@@ -24,17 +24,13 @@ public class TestIntlTranslate_Fake_English {
         HandleFake.getInstance().init(driver);
         HandleFake.getInstance().translate_init("English");
         HandleFake.getInstance().translateErrorReport_init();
+        HandleFake.getInstance().initActivity();
     }
 
     @AfterClass
     public void tearDown(){
-        HandleFake.getInstance().changeLanguage(PropertyData.getProperty("German"));
-        driver.quit();
-    }
-
-    @Test
-    public void translateAlertBump(){
-        Assert.assertTrue(HandleFake.getInstance().translateAlertBump());
+        //HandleFake.getInstance().changeLanguage(PropertyData.getProperty("Korean"));
+        //driver.quit();
     }
 
     @Test
@@ -78,6 +74,11 @@ public class TestIntlTranslate_Fake_English {
     }
 
     @Test
+    public void translateBrushWillExpire(){
+        Assert.assertTrue(HandleFake.getInstance().translateBrushWillExpire());
+    }
+
+    @Test
     public void translateFilterExpired(){
         Assert.assertTrue(HandleFake.getInstance().translateFilterExpired());
     }
@@ -85,6 +86,11 @@ public class TestIntlTranslate_Fake_English {
     @Test
     public void translateSideBrushExpired(){
         Assert.assertTrue(HandleFake.getInstance().translateSideBrushExpired());
+    }
+
+    @Test
+    public void translateBrushExpired(){
+        Assert.assertTrue(HandleFake.getInstance().translateBrushExpired());
     }
 
     @Test

@@ -25,7 +25,7 @@ public class TestIntlTranslate_Korea {
         }
         HandleIntl.getInstance().init(driver);
         HandleIntl.getInstance().translate_init("Korean", "Korean");
-        //HandleIntl.getInstance().translateErrorReport_init();
+        HandleIntl.getInstance().translateErrorReport_init();
     }
 
     @AfterClass

@@ -173,8 +173,10 @@
             <suiteXmlFile>res\test_Spanish.xml</suiteXmlFile>
             <suiteXmlFile>res\test_French.xml</suiteXmlFile>
             <suiteXmlFile>res\test_Portuguese.xml</suiteXmlFile>
-            <suiteXmlFile>res\test_Italian.xml</suiteXmlFile>
-            <suiteile>res\testng_fake_English.xml</suiteXmlFile>
+            <suiteXmlFile>res\test_Italian.xml</suiteXmlFile>-->
+            <!--<suiteXmlFile>res\testng_fake_English.xml</suiteXmlFile>
+            <suiteXmlFile>res\testng_fake_Korean.xml</suiteXmlFile>
+            <suiteXmlFile>res\testng_fake_Taiwan.xml</suiteXmlFile>
             <suiteXmlFile>res\testng_fake_German.xml</suiteXmlFile>
             <suiteXmlFile>res\testng_fake_Spanish.xml</suiteXmlFile>
             <suiteXmlFile>res\testng_fake_French.xml</suiteXmlFile>

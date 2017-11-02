@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * Created by ecosqa on 17/4/28.
  *
  */
-public class TestIntlTranslate_Fake_German {
+public class TestIntlTranslate_Fake_Taiwan {
     private AndroidDriver driver = null;
 
     @BeforeClass
@@ -22,20 +22,14 @@ public class TestIntlTranslate_Fake_German {
             return;
         }
         HandleFake.getInstance().init(driver);
-        HandleFake.getInstance().translate_init("German");
-        //only for debug
-        //HandleFake.getInstance().translateErrorReport_init();
+        HandleFake.getInstance().translate_init("TW");
+        HandleFake.getInstance().translateErrorReport_init();
     }
 
     @AfterClass
     public void tearDown(){
-        HandleFake.getInstance().changeLanguage(PropertyData.getProperty("Spanish"));
+        HandleFake.getInstance().changeLanguage(PropertyData.getProperty("English"));
         driver.quit();
-    }
-
-    @Test
-    public void translateAlertBump(){
-        Assert.assertTrue(HandleFake.getInstance().translateAlertBump());
     }
 
     @Test

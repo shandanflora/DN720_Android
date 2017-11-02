@@ -23,6 +23,8 @@ public class ConsumableActivity {
     private MobileElement back = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/btn_bianShua")
     private MobileElement btnSide = null;
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/btn_gunShua")
+    private MobileElement btnBrush = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/btn_HEPA")
     private MobileElement btnHEPA = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_lala")
@@ -131,7 +133,9 @@ public class ConsumableActivity {
                 tranMap.get("random_deebot_consumable_reset_hint_side_brush"));
         boolean bResetFilter = translateReset(tranMap, btnHEPA,
                 tranMap.get("random_deebot_consumable_reset_hint_filter"));
-        return bStatic && bResetSide && bResetFilter;
+        boolean bMainBrush = translateReset(tranMap, btnBrush,
+                tranMap.get("random_deebot_consumable_reset_hint_main_brush"));
+        return bStatic && bResetSide && bResetFilter && bMainBrush;
     }
 
     public void resetSidebrush(){
@@ -142,6 +146,12 @@ public class ConsumableActivity {
 
     public void resetFilter(){
         btnHEPA.click();
+        btnReset.click();
+        promptSure.click();
+    }
+
+    public void resetBrush(){
+        btnBrush.click();
         btnReset.click();
         promptSure.click();
     }

@@ -3,7 +3,6 @@ package com.ecovacs.test;
 import com.ecovacs.test.common.Common;
 import com.ecovacs.test.common.PropertyData;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -25,7 +24,7 @@ public class TestIntlTranslate_Taiwan {
         }
         HandleIntl.getInstance().init(driver);
         HandleIntl.getInstance().translate_init("TW", "TW");
-        //HandleIntl.getInstance().translateErrorReport_init();
+        HandleIntl.getInstance().translateErrorReport_init();
     }
 
     @AfterClass

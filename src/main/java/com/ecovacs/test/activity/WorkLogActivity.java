@@ -26,7 +26,7 @@ public class WorkLogActivity {
 
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/titleContent")
     private MobileElement title = null;
-    @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_time_sign")
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_min")
     private MobileElement timeTotal = null;
     @FindBy(xpath = "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]")
     private MobileElement timeTips = null;
@@ -107,7 +107,7 @@ public class WorkLogActivity {
                 dateFlag=false;
             }finally{
                 if (!dateFlag) {//not date
-                    int iIndex = textView.getText().trim().indexOf(" ");
+                    int iIndex = textView.getText().trim().indexOf("Min");
                     //today
                     if (iIndex == -1){
                         boolean bToday = textView.getText().trim().equalsIgnoreCase(tranMap.get("random_deebot_today"));
@@ -118,12 +118,13 @@ public class WorkLogActivity {
                         }
                         System.out.println("today--" + textView.getText());
                     }else {//duration
-                        String strDur = textView.getText().trim().substring(0, iIndex);
-                        boolean bDuration = strDur.equalsIgnoreCase(tranMap.get("random_deebot_time"));
+                        String strDur = textView.getText().trim().substring(0, iIndex - 1);
+                        String strMap = tranMap.get("random_deebot_state_clean") + (" | ") + tranMap.get("random_deebot_time");
+                        boolean bDuration = strDur.equalsIgnoreCase(strMap);
                         if (!bDuration){
                             TranslateErrorReport.getInstance().insetNewLine(
                                     strLanguage, "Work log", strDur,
-                                    tranMap.get("random_deebot_time"), "fail");
+                                    strMap, "fail");
                         }
                         System.out.println("duration--" + strDur);
                     }

@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by ecosqa on 17/4/28.
  * handle fake robot
  */
-public class HandleFake {
+class HandleFake {
     private static HandleFake handleFake = null;
     private static Logger logger = LoggerFactory.getLogger(HandleIntl.class);
     //private AndroidDriver androidDriver = null;
@@ -62,7 +62,7 @@ public class HandleFake {
     }
 
     void translate_init(String strColName){
-        Map<String, String> tranMap = TranslateIntl.getInstance().readExcel("SLIM2.xlsx", strColName);
+        Map<String, String> tranMap = TranslateIntl.getInstance().readExcel("DN720.xlsx", strColName);
         if(tranMap.isEmpty()){
             logger.error("The language map is empty!!!");
             return;
@@ -73,23 +73,25 @@ public class HandleFake {
 
     private void enterUnibotClean(){
         MainActivity.getInstance().showActivity();
-        Common.getInstance().waitForSecond(500);
-        MainActivity.getInstance().clickDevice("SLIM2_FAKE");
+        Common.getInstance().waitForSecond(4000);
+        MainActivity.getInstance().clickDevice("M86_FAKE");
         UnibotCleanActivity.getInstance().showActivity();
         UnibotCleanActivity.getInstance().showText("-");
+
     }
 
-    boolean translateAlertBump(){
+    void initActivity(){
         enterUnibotClean();
-        List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "error111");
-        HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
-        logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(1000);
-        boolean bMal = UnibotCleanActivity.getInstance().bumpMalfunction(languageMap);
-        UnibotCleanActivity.getInstance().clickTip();
-        boolean bAlert = AlertActivity.getInsatance().bumpAlert(languageMap);
-        return bMal && bAlert;
     }
+
+    /*
+    102 - hang deebot
+    103 - wheel error
+    104 - drop Sensor error
+    108 - side brush error
+    109 - main brush error
+    110 - dust bin error
+     */
 
     boolean translateAlertDrop(){
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "error104");
@@ -185,7 +187,7 @@ public class HandleFake {
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "sideBrush5");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(1000);
+        Common.getInstance().waitForSecond(2000);
         boolean bMal = UnibotCleanActivity.getInstance().sideBrushWillExpire(languageMap);
         UnibotCleanActivity.getInstance().clickTip();
         List<String> strList = new ArrayList<String>();
@@ -201,12 +203,30 @@ public class HandleFake {
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "filter5");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(1000);
+        Common.getInstance().waitForSecond(2000);
         boolean bMal = UnibotCleanActivity.getInstance().filterWillExpire(languageMap);
         UnibotCleanActivity.getInstance().clickTip();
         List<String> strList = new ArrayList<String>();
         strList.add(languageMap.get("random_deebot_sidebrush_low_hint2"));
         strList.add(languageMap.get("random_deebot_filter_low_hint2"));
+        AlertActivity.getInsatance().consumableRemind(languageMap, strList);
+        return bMal /*&& bAlert*/;
+    }
+
+    boolean translateBrushWillExpire(){
+        //will be delete
+        //enterUnibotClean();
+        //********
+        List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "brush5");
+        HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
+        logger.info("complete send http request!!!");
+        Common.getInstance().waitForSecond(2000);
+        boolean bMal = UnibotCleanActivity.getInstance().brushWillExpire(languageMap);
+        UnibotCleanActivity.getInstance().clickTip();
+        List<String> strList = new ArrayList<String>();
+        strList.add(languageMap.get("random_deebot_sidebrush_low_hint2"));
+        strList.add(languageMap.get("random_deebot_filter_low_hint2"));
+        strList.add(languageMap.get("random_deebot_mainbrush_low_hint2"));
         AlertActivity.getInsatance().consumableRemind(languageMap, strList);
         return bMal /*&& bAlert*/;
     }
@@ -218,15 +238,14 @@ public class HandleFake {
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "filter0");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(1000);
+        Common.getInstance().waitForSecond(2000);
         boolean bMal = UnibotCleanActivity.getInstance().filterExpired(languageMap);
         UnibotCleanActivity.getInstance().clickTip();
         List<String> strList = new ArrayList<String>();
+        strList.add(languageMap.get("random_deebot_mainbrush_low_hint2"));
         strList.add(languageMap.get("random_deebot_sidebrush_due_hint2"));
         strList.add(languageMap.get("random_deebot_filter_due_hint2"));
         AlertActivity.getInsatance().consumableRemind(languageMap, strList);
-        //reset accessory
-        resetConsumable();
         return bMal;
     }
 
@@ -237,25 +256,53 @@ public class HandleFake {
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "sideBrush0");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(1000);
+        Common.getInstance().waitForSecond(2000);
         boolean bMal = UnibotCleanActivity.getInstance().sideBrushExpired(languageMap);
         UnibotCleanActivity.getInstance().clickTip();
         List<String> strList = new ArrayList<String>();
         strList.add(languageMap.get("random_deebot_filter_low_hint2"));
+        strList.add(languageMap.get("random_deebot_mainbrush_low_hint2"));
         strList.add(languageMap.get("random_deebot_sidebrush_due_hint2"));
         AlertActivity.getInsatance().consumableRemind(languageMap, strList);
+        return bMal;
+    }
+
+    boolean translateBrushExpired(){
+        //will be delete
+        //enterUnibotClean();
+        //********
+        List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "brush0");
+        HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
+        logger.info("complete send http request!!!");
+        Common.getInstance().waitForSecond(2000);
+        boolean bMal = UnibotCleanActivity.getInstance().brushExpired(languageMap);
+        UnibotCleanActivity.getInstance().clickTip();
+        List<String> strList = new ArrayList<String>();
+        strList.add(languageMap.get("random_deebot_sidebrush_due_hint2"));
+        strList.add(languageMap.get("random_deebot_filter_due_hint2"));
+        strList.add(languageMap.get("random_deebot_mainbrush_due_hint2"));
+        AlertActivity.getInsatance().consumableRemind(languageMap, strList);
+        //reset accessory
+        resetConsumable();
         return bMal;
     }
 
     private void resetConsumable(){
         UnibotCleanActivity.getInstance().clickSetting();
         SettingActivity.getInstance().clickConsumable();
+        //reset side brush
         ConsumableActivity.getInstance().resetSidebrush();
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "sideBrush100");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         Common.getInstance().waitForSecond(1500);
+        //reset filter
         ConsumableActivity.getInstance().resetFilter();
         paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "filter100");
+        HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
+        Common.getInstance().waitForSecond(1500);
+        //reset brush
+        ConsumableActivity.getInstance().resetBrush();
+        paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "brush100");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         Common.getInstance().waitForSecond(1500);
         ConsumableActivity.getInstance().clickBack();
@@ -269,11 +316,11 @@ public class HandleFake {
         List<NameValuePair> paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "error101");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(500);
+        Common.getInstance().waitForSecond(1500);
         paras = HttpRequestUtils.getInstance().getParaFromJson("command.json", "goCharge");
         HttpRequestUtils.getInstance().HttpPost(PropertyData.getProperty("url"), paras);
         logger.info("complete send http request!!!");
-        Common.getInstance().waitForSecond(500);
+        Common.getInstance().waitForSecond(2000);
         UnibotCleanActivity.getInstance().clickCharge();
         return UnibotCleanActivity.getInstance().stopCharge(languageMap);
     }

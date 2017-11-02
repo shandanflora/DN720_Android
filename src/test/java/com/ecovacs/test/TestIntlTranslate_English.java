@@ -28,8 +28,8 @@ public class TestIntlTranslate_English {
 
     @AfterClass
     public void tearDown(){
-        HandleIntl.getInstance().changeLanguage(PropertyData.getProperty("German"));
-        driver.quit();
+        //HandleIntl.getInstance().changeLanguage(PropertyData.getProperty("German"));
+        //driver.quit();
     }
 
     @Test
@@ -137,7 +137,7 @@ public class TestIntlTranslate_English {
         Assert.assertTrue(HandleIntl.getInstance().translateWorkLog());
     }
 
-    @Test
+    /*@Test
     public void translateContinueClean(){
         Assert.assertTrue(HandleIntl.getInstance().translateContinueClean());
     }
@@ -150,7 +150,7 @@ public class TestIntlTranslate_English {
     @Test
     public void translateContinueClean_SameTime(){
         Assert.assertTrue(HandleIntl.getInstance().translateSameContinueTime());
-    }
+    }*/
 
     @Test
     public void translateNoTimeSchedule(){

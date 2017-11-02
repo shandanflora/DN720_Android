@@ -30,6 +30,8 @@ public class TimeScheduleActivity {
     private AndroidElement textViewAddTime = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/listView")
     private AndroidElement listView = null;
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_hint")
+    private AndroidElement textViewHint = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/tv_week")
     private AndroidElement repeatDate = null;
     @FindBy(xpath = " //android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ListView[1]/android.widget.FrameLayout[1]")
@@ -103,15 +105,24 @@ public class TimeScheduleActivity {
                 "random_deebot_never"};
         //select sunday
         String strLanguage = tranMap.get("language");
+        String strDate = repeatDate.getText().trim();
+        String strHint = textViewHint.getText().trim();
+        String strMap = "AUTO" + tranMap.get("random_deebot_state_clean").trim();
         Common.getInstance().showActivity(repeatDate);
         //int iIndex = Common.getInstance().getWeekIndex();
-        boolean brepeatTime = repeatDate.getText().trim().equalsIgnoreCase(tranMap.get(weekDays[iIndex]));
+        boolean brepeatTime = strDate.equalsIgnoreCase(tranMap.get(weekDays[iIndex]));
         if(!brepeatTime){
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "TimeSchedule", repeatDate.getText(),
                     tranMap.get(weekDays[iIndex]), "fail");
         }
-        return brepeatTime;
+        boolean bHint = strHint.equalsIgnoreCase(strMap);
+        if(!bHint){
+            TranslateErrorReport.getInstance().insetNewLine(
+                    strLanguage, "TimeSchedule", strHint,
+                    strMap, "fail");
+        }
+        return brepeatTime && bHint;
     }
 
     public boolean addOneTime_never(Map<String, String> tranMap){

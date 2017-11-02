@@ -137,7 +137,7 @@ public class TestIntlTranslate_German {
         Assert.assertTrue(HandleIntl.getInstance().translateWorkLog());
     }
 
-    @Test
+    /*@Test
     public void translateContinueClean(){
         Assert.assertTrue(HandleIntl.getInstance().translateContinueClean());
     }
@@ -150,7 +150,7 @@ public class TestIntlTranslate_German {
     @Test
     public void translateContinueClean_SameTime(){
         Assert.assertTrue(HandleIntl.getInstance().translateSameContinueTime());
-    }
+    }*/
 
     @Test
     public void translateNoTimeSchedule(){

@@ -260,7 +260,7 @@ class HandleIntl {
             logger.error("The language map is empty!!!");
             return;
         }
-        Map<String, String> tranMap = TranslateIntl.getInstance().readExcel("SLIM2.xlsx", strColName);
+        Map<String, String> tranMap = TranslateIntl.getInstance().readExcel("DN720.xlsx", strColName);
         if(tranMap.isEmpty()){
             logger.error("The language map is empty!!!");
             return;
@@ -454,7 +454,7 @@ class HandleIntl {
 
     boolean translateUnibotSetting(){
         //will delete
-        //MainActivity.getInstance().clickDevice("M86");
+        MainActivity.getInstance().clickDevice("M86");
         //
         UnibotCleanActivity.getInstance().clickSetting();
         /*SettingActivity.getInstance().showActivity();
@@ -470,7 +470,7 @@ class HandleIntl {
         Common.getInstance().goBack(androidDriver, 1);
         return bResult;
     }
-
+/*
     boolean translateContinueClean(){
         //after check return to setting
         SettingActivity.getInstance().clickContinuedClean();
@@ -505,7 +505,7 @@ class HandleIntl {
         //return to settings
         Common.getInstance().goBack(androidDriver, 1);
         return bResult;
-    }
+    }*/
 
     boolean translateRename(){
         //after check return to setting
@@ -667,7 +667,7 @@ class HandleIntl {
 
     boolean translateOverTimeSchedule(){
         TimeScheduleActivity.getInstance().showActivity();
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 10; i++){
             TimeScheduleActivity.getInstance().clickAddSchedule();
             NewScheduleActivity.getInstance().setStartTime();
             NewScheduleActivity.getInstance().clickRepeat();
@@ -738,7 +738,7 @@ class HandleIntl {
         TimeScheduleActivity.getInstance().showActivity();
         return TimeScheduleActivity.getInstance().translate(languageMap);
     }
-
+/*
     boolean repeatSchedule(){
         MainActivity.getInstance().showActivity();
         MainActivity.getInstance().clickDevice("DM88");
@@ -754,6 +754,6 @@ class HandleIntl {
         NewScheduleActivity.getInstance().confirmAdd();
         TimeScheduleActivity.getInstance().delAllTasks();
         return true;
-    }
+    }*/
 
 }

@@ -1,5 +1,6 @@
 package com.ecovacs.test.activity;
 
+import com.ecovacs.test.common.Common;
 import com.ecovacs.test.common.TranslateErrorReport;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -21,9 +22,9 @@ public class AlertActivity {
     private MobileElement title = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/title_back")
     private MobileElement back = null;
-    @FindBy(xpath = "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[1]/android.widget.TextView[1]")
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/more_text_title")
     private MobileElement textTitle = null;
-    @FindBy(xpath = "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[1]/android.widget.TextView[2]")
+    @FindBy(id = "com.ecovacs.ecosphere.intl:id/more_text")
     private MobileElement textContent = null;
     @FindBy(id = "com.ecovacs.ecosphere.intl:id/warn_listview")
     private MobileElement listWarn = null;
@@ -47,19 +48,23 @@ public class AlertActivity {
         back.click();
     }
 
-    private boolean translateStaticUI(Map<String, String> tranMap, String strWarnKey){
+    private boolean translateStaticUI(Map<String, String> tranMap, String strWarnKey, Common.Malfunction malType){
         String strLanguage = tranMap.get("language");
+        String strWarnTitle = tranMap.get("random_deebot_warn_text_title");
+        if (malType == Common.Malfunction.DEEBOT_SUSPEND){
+            strWarnTitle = tranMap.get("random_deebot_warn1_text_title");
+        }
         boolean bTitle = title.getText().equalsIgnoreCase(tranMap.get("random_deebot_warn_title"));
         if (!bTitle) {
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "Alert", title.getText(),
                     tranMap.get("random_deebot_warn_title"), "fail");
         }
-        boolean bTextTitle = textTitle.getText().equalsIgnoreCase(tranMap.get("random_deebot_warn_text_title"));
+        boolean bTextTitle = textTitle.getText().equalsIgnoreCase(strWarnTitle);
         if (!bTextTitle) {
             TranslateErrorReport.getInstance().insetNewLine(
                     strLanguage, "Alert", textTitle.getText(),
-                    tranMap.get("random_deebot_warn_text_title"), "fail");
+                    strWarnTitle, "fail");
         }
         boolean bTextContent = textContent.getText().equalsIgnoreCase(tranMap.get(strWarnKey));
         if (!bTextContent) {
@@ -70,44 +75,38 @@ public class AlertActivity {
         return bTitle && bTextTitle && bTextContent;
     }
 
-    public boolean bumpAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_bump_detail");
-        clickBack();
-        return bStatic;
-    }
-
     public boolean dropAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_drop_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_drop_detail", Common.Malfunction.OTHERS);
         clickBack();
         return bStatic;
     }
 
     public boolean wheelAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_wheel_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_wheel_detail", Common.Malfunction.OTHERS);
         clickBack();
         return bStatic;
     }
 
     public boolean mainBrushAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_mainbrush_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_mainbrush_detail", Common.Malfunction.OTHERS);
         clickBack();
         return bStatic;
     }
 
     public boolean sideBrushAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_sidebrush_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_sidebrush_detail", Common.Malfunction.OTHERS);
         clickBack();
         return bStatic;
     }
 
     public boolean dustBinAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_dust_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_dust_detail", Common.Malfunction.OTHERS);
         clickBack();
         return bStatic;
     }
 
     public boolean deebotSuspendAlert(Map<String, String> tranMap){
-        boolean bStatic = translateStaticUI(tranMap, "random_deebot_suspend_detail");
+        boolean bStatic = translateStaticUI(tranMap, "random_deebot_suspend_detail", Common.Malfunction.DEEBOT_SUSPEND);
         clickBack();
         return bStatic;
     }
@@ -120,7 +119,7 @@ public class AlertActivity {
             boolean bRes = ele.getText().equalsIgnoreCase(tranMap.get("random_deebot_remind_text_title"));
             if (!bRes) {
                 TranslateErrorReport.getInstance().insetNewLine(
-                        strLanguage, "Alert", textContent.getText(),
+                        strLanguage, "Alert", ele.getText(),
                         tranMap.get("random_deebot_remind_text_title"), "fail");
             }
         }
